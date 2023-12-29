@@ -1,1 +1,1 @@
-# dl_mini_projects
+I am seeking mini project ideas that delve into Natural Language Processing (NLP) with a focus on text classification, text generation and speech recognition. Additionally, I'm interested in projects related to Computer Vision, specifically involving tasks such as object detection, image classification, and image generation.
