@@ -19,11 +19,12 @@ def classify_img(image):
     model_top_3_preds_conf = np.round(model_preds[model_top_3_preds_idx], decimals=2)
     return {model_top_3_preds_class[i]: model_top_3_preds_conf[i] for i in range(3)}
 
-iface = gr.Interface(
-    fn=classify_img,
-    inputs="image",
-    outputs=gr.Label(num_top_classes=3),
-    live=True,
-)
+with gr.Blocks() as iface:
+    input_img = gr.Image(label="Dog Image")
+    output_lbl = gr.Label(label="Top 3 Results", num_top_classes=3)
+    predict_btn = gr.Button("Predict")
+    predict_btn.click(fn=classify_img,
+                      inputs=input_img,
+                      outputs=output_lbl)
 
 iface.launch(share=True)
