@@ -215,9 +215,14 @@ def model_test(image_array):
         return image_array
 
 with gr.Blocks() as iface:
-    input_img = gr.Image(label="Input Image")
-    output_img = gr.Image(label="Output Image")
-    detect_btn = gr.Button("Detect")
+    with gr.Row():
+        with gr.Column():
+            input_img = gr.Image(label="Input Image")
+
+        with gr.Column():
+            output_img = gr.Image(label="Output Image")
+            detect_btn = gr.Button("Detect")
+            
     detect_btn.click(fn=model_test,
                      inputs=input_img,
                      outputs=output_img)
