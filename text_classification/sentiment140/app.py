@@ -32,7 +32,7 @@ def classify_text(text):
     sentiment = "Negative" if pred == 0 else "Positive"
     pred_conf = tf.squeeze(model.predict(text_vectorized))*100
     conf = tf.round(100 - pred_conf) if sentiment == "Negative" else tf.round(pred_conf)
-    return f"{conf}% -- {sentiment}"
+    return f"{conf}% {sentiment}"
 
 with gr.Blocks() as iface:
     with gr.Row():
@@ -41,10 +41,10 @@ with gr.Blocks() as iface:
             examples = gr.Examples(examples=["Just got a promotion at work! Feeling grateful and excited for the new opportunities. #Blessed",
                                              "Stuck in traffic again. Can't believe how frustrating the commute is every day. #TrafficWoes"],
                                              inputs=input_text)
-            analyze_btn = gr.Button("Analyze")
 
         with gr.Column():
             output_label = gr.Label(label="Sentiment")
+            analyze_btn = gr.Button("Analyze")
 
     analyze_btn.click(fn=classify_text, inputs=input_text, outputs=output_label)
 
