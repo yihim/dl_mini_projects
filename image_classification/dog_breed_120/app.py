@@ -20,9 +20,13 @@ def classify_img(image):
     return {model_top_3_preds_class[i]: model_top_3_preds_conf[i] for i in range(3)}
 
 with gr.Blocks() as iface:
-    input_img = gr.Image(label="Dog Image")
-    output_lbl = gr.Label(label="Top 3 Results", num_top_classes=3)
-    predict_btn = gr.Button("Predict")
+    with gr.Row():
+        with gr.Column():
+            input_img = gr.Image(label="Dog Image")
+        with gr.Column():
+            output_lbl = gr.Label(label="Top 3 Results", num_top_classes=3)
+            predict_btn = gr.Button("Predict")
+
     predict_btn.click(fn=classify_img,
                       inputs=input_img,
                       outputs=output_lbl)
