@@ -28,21 +28,25 @@ def classify_text(text):
     cleaned_text = preprocess_text(text)
     print(cleaned_text)
     text_vectorized = text_vectorizer([cleaned_text])
-    preds = tf.squeeze(tf.cast(tf.round(model.predict(text_vectorized)), dtype=tf.int64))
-    sentiment = "Negative" if preds == 0 else "Positive"
-    return sentiment
+    pred = tf.squeeze(tf.cast(tf.round(model.predict(text_vectorized)), dtype=tf.int64))
+    sentiment = "Negative" if pred == 0 else "Positive"
+    pred_conf = tf.squeeze(model.predict(text_vectorized))*100
+    conf = tf.round(100 - pred_conf) if sentiment == "Negative" else tf.round(pred_conf)
+    return f"{conf}% -- {sentiment}"
 
 with gr.Blocks() as iface:
     with gr.Row():
         with gr.Column():
             input_text = gr.Text(label="Tweets")
+            examples = gr.Examples(examples=["Just got a promotion at work! Feeling grateful and excited for the new opportunities. #Blessed",
+                                             "Stuck in traffic again. Can't believe how frustrating the commute is every day. #TrafficWoes"],
+                                             inputs=input_text)
             analyze_btn = gr.Button("Analyze")
+
         with gr.Column():
             output_label = gr.Label(label="Sentiment")
 
     analyze_btn.click(fn=classify_text, inputs=input_text, outputs=output_label)
-    examples = gr.Examples(examples=["Just got a promotion at work! Feeling grateful and excited for the new opportunities. #Blessed",
-                                      "Stuck in traffic again. Can't believe how frustrating the commute is every day. #TrafficWoes"],
-                           inputs=input_text)
+
 
 iface.launch()
