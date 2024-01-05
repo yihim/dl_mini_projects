@@ -33,9 +33,16 @@ def classify_text(text):
     return sentiment
 
 with gr.Blocks() as iface:
-    input_text = gr.Text(label="Tweets")
-    output_label = gr.Label(label="Sentiment")
-    analyze_btn = gr.Button("Analyze")
+    with gr.Row():
+        with gr.Column():
+            input_text = gr.Text(label="Tweets")
+            analyze_btn = gr.Button("Analyze")
+        with gr.Column():
+            output_label = gr.Label(label="Sentiment")
+
     analyze_btn.click(fn=classify_text, inputs=input_text, outputs=output_label)
+    examples = gr.Examples(examples=["Just got a promotion at work! Feeling grateful and excited for the new opportunities. #Blessed",
+                                      "Stuck in traffic again. Can't believe how frustrating the commute is every day. #TrafficWoes"],
+                           inputs=input_text)
 
 iface.launch()
