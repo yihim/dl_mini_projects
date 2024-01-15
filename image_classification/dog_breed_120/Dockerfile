@@ -6,4 +6,6 @@ COPY . .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-CMD ["python", "app.py"]
+ENV HOME /app
+
+CMD ["python3", "/app/app.py"]
