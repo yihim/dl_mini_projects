@@ -31,4 +31,4 @@ with gr.Blocks() as iface:
                       inputs=input_img,
                       outputs=output_lbl)
 
-iface.launch(share=True)
+iface.launch(share=True, debug=True, server_port=7860)
