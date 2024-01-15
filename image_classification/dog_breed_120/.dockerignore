@@ -1,0 +1,4 @@
+model_logs/
+.ipynb_checkpoints/
+.idea/
+dog_breed_train.ipynb
